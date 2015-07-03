@@ -31,8 +31,6 @@ gem 'bootstrap-sass', '~> 3.3.5'
 
 gem 'devise'
 
-gem 'rubocop', :require => false
-
 gem 'rake'
 
 group :doc do
@@ -40,8 +38,9 @@ group :doc do
   gem 'sdoc', :require => false
 end
 
-
-  
+group :development do
+  gem 'rubocop', :require => false
+end 
 
 
 # Use ActiveModel has_secure_password
