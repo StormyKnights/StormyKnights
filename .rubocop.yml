@@ -22,3 +22,6 @@ Style/StringLiterals:
 
 Style/ExtraSpacing:
   Enabled: false
+
+Metrics/LineLength:
+  Max: 200
