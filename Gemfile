@@ -35,6 +35,8 @@ gem 'rake'
 
 gem 'simple_form'
 
+gem 'pry-rails', :group => :development
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', :require => false
