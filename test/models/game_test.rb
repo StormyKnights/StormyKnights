@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'pry-rails'
+# require 'pry-rails'
 
 class GameTest < ActiveSupport::TestCase
    test "the truth" do
