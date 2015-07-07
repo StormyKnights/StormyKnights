@@ -1,9 +1,8 @@
 class PiecesController < ApplicationController
+  def create
+  end
 
-	def create
-	end
+  def update
+  end
 
-	def update
-	end
-	
 end
