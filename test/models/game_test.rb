@@ -1,6 +1,5 @@
 require 'test_helper'
 
-
 class GameTest < ActiveSupport::TestCase
    test "the truth" do
      assert true
@@ -33,7 +32,7 @@ class GameTest < ActiveSupport::TestCase
      g = Game.create(white_user_id: 1, black_user_id: 2)
 
      assert_equal 32, g.pieces.count
-     assert_equal "King", g.pieces.last.name
+     assert_equal "King", g.pieces.last.type
      assert_equal 4, g.pieces.last.x_coordinates
      assert_equal 7, g.pieces.last.y_coordinates
 
