@@ -4,13 +4,20 @@ class GamesController < ApplicationController
   end
 
   def create
+    @game = Game.create(game_params)
   end
 
   def show
-    @piece = Piece.all
+    @game = Game.find(params[:id])
+    @pieces = @game.pieces
   end
 
   def update
   end
 
+  def game_params
+    params.require(:game).permit(
+      :white_user_id,
+      :black_user_id)
+  end
 end

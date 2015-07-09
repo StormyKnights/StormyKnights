@@ -13,3 +13,17 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+body {
+  padding-top: 50px;
+}
+
+.btn {
+  border-radius: 0;
+  color: white;
+}
+
+.main-page {
+  text-align: center;
+  padding-top:5rem;
+}
