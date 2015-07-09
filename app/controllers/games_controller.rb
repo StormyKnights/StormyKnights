@@ -7,6 +7,7 @@ class GamesController < ApplicationController
   end
 
   def show
+    @piece = Piece.all
   end
 
   def update
