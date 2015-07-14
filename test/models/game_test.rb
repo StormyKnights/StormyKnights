@@ -42,18 +42,17 @@ class GameTest < ActiveSupport::TestCase
 
     g = Game.create(white_user_id: 1, black_user_id: 2)
     
-    assert_equal true, g.is_occupied?(4, 7)
-    assert_equal true, g.is_obstructed?([0,0], [3,0])
-    assert_equal true, g.is_obstructed?([1,0], [1,3])
-    assert_equal true, g.is_obstructed?([2,0], [4,2])
-    assert_equal true, g.is_obstructed?([4,2], [2,0])
-    assert_equal false, g.is_obstructed?([0,2], [2,4])
-    assert_equal false, g.is_obstructed?([1,3], [5,3])
-    assert_equal false, g.is_obstructed?([4,2], [4,5])
+    assert_equal true, g.occupied?(4, 7)
+    assert_equal true, g.obstructed?([0, 0], [3, 0])
+    assert_equal true, g.obstructed?([1, 0], [1, 3])
+    assert_equal true, g.obstructed?([2, 0], [4, 2])
+    assert_equal true, g.obstructed?([4, 2], [2, 0])
+    assert_equal false, g.obstructed?([0, 2], [2, 4])
+    assert_equal false, g.obstructed?([1, 3], [5, 3])
+    assert_equal false, g.obstructed?([4, 2], [4, 5])
     assert_raise RuntimeError do
-      g.is_obstructed?([3,0], [4,2])
+      g.obstructed?([3, 0], [4, 2])
     end
-
    end
 
 end
