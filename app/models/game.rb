@@ -72,27 +72,25 @@ class Game < ActiveRecord::Base
       slope = (y2-y1).to_f/(x2-x1).to_f
     end
 
-    # iterates through every square between piece1 and destination
+    # Iterates through every square between piece1 and destination
     # and checks whether it is occupied
     if horizontal && x1 < x2
-      (x1+1..x2-1).each do |x|
+      (x1+1).upto(x2-1) do |x|
         return true if is_occupied?(x, y1)
       end
     end
     if horizontal && x1 > x2
-      (x2+1..x1-1).each do |x|
+      (x1-1).downto(x2+1) do |x|
         return true if is_occupied?(x, y1)
       end
     end
     if vertical && y1 < y2
-      i = y1+1
-      while i < y2 do
-        return true if is_occupied?(x1, i)
-        i += 1
+      (y1+1).upto(y2-1) do |y|
+        return true if is_occupied?(x1, y)
       end
     end
     if vertical && y1 > y2
-      (y2+1..y1-1).each do |y|
+      (y1-1).downto(y2+1) do |y|
         return true if is_occupied?(x1, y)
       end
     end
@@ -100,14 +98,14 @@ class Game < ActiveRecord::Base
       return false
     end
     if slope.abs == 1.0 && x1 < x2
-      (x1+1..x2-1).each do |x|
+      (x1+1).upto(x2-1) do |x|
         delta_y = x-x1
         y = y2 > y1 ? y1 + delta_y : y1 - delta_y
         return true if is_occupied?(x, y)
       end
     end
     if slope.abs == 1.0 && x1 > x2
-      (x2+1..x1-1).each do |x|
+      (x1-1).downto(x2+1) do |x|
         delta_y = x1-x
         y = y2 > y1 ? y1 + delta_y : y1 - delta_y
         return true if is_occupied?(x, y)
