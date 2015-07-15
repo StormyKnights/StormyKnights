@@ -8,7 +8,7 @@ StormyKnights::Application.routes.draw do
 
   resources :games, :only => [:new, :create, :show, :update]
 
-  resources :pieces, :only => [:create, :update]
+  resources :pieces, :only => [:update, :show]
 
   resources :users, :only => [:show]
 
