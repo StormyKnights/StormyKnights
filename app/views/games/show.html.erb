@@ -9,7 +9,7 @@
             <td>
               <% @pieces.each do |piece| %>
                 <% if piece.x_coordinates == col && piece.y_coordinates == row %>
-                  <%= image_tag(piece.image, class: 'img-responsive') %>
+                  <%= link_to image_tag(piece.image, class: 'img-responsive'), piece_path %>
                 <% end %>
               <% end %><!-- end pieces.each -->
             </td>
