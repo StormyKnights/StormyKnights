@@ -51,8 +51,6 @@ class Game < ActiveRecord::Base
     false
   end
 
-<<<<<<< HEAD
-=======
   def check_path(x1, y1, x2, y2)
     if y1 == y2
       return 'horizontal'
@@ -117,5 +115,4 @@ class Game < ActiveRecord::Base
     else return false
     end
   end
->>>>>>> 4d555d888a60d8b4f5c9301d28b8210b2ecde986
 end
