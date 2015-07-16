@@ -34,6 +34,7 @@ gem 'devise'
 gem 'rake'
 
 gem 'simple_form'
+gem 'haml-rails', '~> 0.9.0'
 
 gem 'pry-rails', :group => :development
 
