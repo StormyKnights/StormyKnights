@@ -35,7 +35,13 @@ td img {
   margin: 0 auto;
 }
 
-td:active #highlight {
+td div {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+
+}
+.selected_piece {
   border: 2px solid blue;
   background-color: yellow;
 }

@@ -6,12 +6,16 @@
       <% 7.downto(0) do |row| %>
         <tr>
           <% 0.upto(7) do |col| %>
-            <td class='highlight'>
-              <% @pieces.each do |piece| %>
-                <% if piece.x_coordinates == col && piece.y_coordinates == row %>
-                  <%= image_tag(piece.image, class: 'img-responsive') %>
-                <% end %>
-              <% end %><!-- end pieces.each -->
+            <td id='highlight'>
+            	<%= link_to piece_path(@piece, :x_coordinates => col, :y_coordinates => row), :method => 'PUT' do %>
+            		<div>
+		              <% @pieces.each do |piece| %>
+		                <% if piece.x_coordinates == col && piece.y_coordinates == row %>
+		                  <%= image_tag(piece.image, class: piece_class(@piece, piece))  %>                  	
+		                <% end %>
+		              <% end %><!-- end pieces.each -->
+		            </div>
+              <% end %>
             </td>
           <% end %><!--end column-->
         </tr>
