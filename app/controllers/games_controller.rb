@@ -4,7 +4,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.create
+    @game = Game.create(game_params)
   end
 
   def show
@@ -15,8 +15,10 @@ class GamesController < ApplicationController
   def update
   end
 
+  private
+
   def game_params
-    params.require(:game).permit(
+    params.fetch(:game).permit(
       :white_user_id,
       :black_user_id)
   end
