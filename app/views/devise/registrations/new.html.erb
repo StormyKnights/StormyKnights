@@ -1,8 +1,10 @@
-<div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1">
+<br/>
+<br/>
+<div class="booyah-box col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1">
 
-  <h2>Sign up</h2>
+  <h2>Sign Up</h2>
 
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
 
     <div class="field">
@@ -22,9 +24,9 @@
       <%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
-
+    <br/>
     <div class="actions">
-      <%= f.submit "Sign up" %>
+      <%= f.submit "Sign Up", :class => 'btn btn-primary' %>
     </div>
   <% end %>
 
