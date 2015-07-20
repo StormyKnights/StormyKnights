@@ -73,7 +73,6 @@ class GameTest < ActiveSupport::TestCase
   test "capturing a piece of different color by setting its coordinates to nil" do
   # Move to square occupied by piece of different color
   # Set coordinates of occupying piece to nil
-
     g = Game.create(white_user_id: 1, black_user_id: 2)
     white_pawn = g.pieces.find_by(x_coordinates: 1, y_coordinates: 1)
     assert_not_nil g.pieces.find_by(x_coordinates: 1, y_coordinates: 6)
