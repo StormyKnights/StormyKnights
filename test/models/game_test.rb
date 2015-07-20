@@ -38,21 +38,49 @@ class GameTest < ActiveSupport::TestCase
 
    end
 
-   # test "is_occupied" do
+   test "obstructed?" do
 
-   #  g = Game.create(white_user_id: 1, black_user_id: 2)
-    
-   #  assert_equal true, g.occupied?(4, 7)
-   #  assert_equal true, g.obstructed?([0, 0], [3, 0])
-   #  assert_equal true, g.obstructed?([1, 0], [1, 3])
-   #  assert_equal true, g.obstructed?([2, 0], [4, 2])
-   #  assert_equal true, g.obstructed?([4, 2], [2, 0])
-   #  assert_equal false, g.obstructed?([0, 2], [2, 4])
-   #  assert_equal false, g.obstructed?([1, 3], [5, 3])
-   #  assert_equal false, g.obstructed?([4, 2], [4, 5])
-   #  assert_raise RuntimeError do
-   #    g.obstructed?([3, 0], [4, 2])
-   #  end
-   # end
+     g = Game.create(white_user_id: 1, black_user_id: 2)
+     piece1 = g.pieces.find_by(x_coordinates: 0, y_coordinates: 0)
+     piece2 = g.pieces.find_by(x_coordinates: 2, y_coordinates: 0)
+     piece3 = g.pieces.find_by(x_coordinates: 6, y_coordinates: 7)
+     piece4 = g.pieces.find_by(x_coordinates: 6, y_coordinates: 6)
+     piece5 = g.pieces.create( x_coordinates: 2, y_coordinates: 4, type: "Pawn", color: "white")
 
+     assert_equal true, g.occupied?(4, 7)
+     assert_equal true, piece1.obstructed?([3, 0])
+     assert_equal true, piece2.obstructed?([2, 4])
+     assert_equal true, piece2.obstructed?([0, 0])
+     assert_equal true, piece3.obstructed?([3, 4])
+     assert_equal true, piece4.obstructed?([3, 6])
+     assert_equal false, piece4.obstructed?([6, 4])
+     assert_equal false, piece5.obstructed?([6, 4])
+     assert_equal false, piece5.obstructed?([0, 4])
+     assert_raise RuntimeError do
+       piece1.obstructed?([1, 2])
+     end
+  end
+
+  test "capturing a piece of same color" do
+
+    g = Game.create(white_user_id: 1, black_user_id: 2)
+    white_pawn = g.pieces.find_by(x_coordinates: 1, y_coordinates: 1)
+    assert_raise RuntimeError do
+      white_pawn.move_to!(2, 1)   #moving to square occupied by piece of same color
+    end
+  end
+
+  test "capturing a piece of different color by setting its coordinates to nil" do
+  # Move to square occupied by piece of different color
+  # Set coordinates of occupying piece to nil
+  # Confirm that the occupying piece is gone from the square
+    g = Game.create(white_user_id: 1, black_user_id: 2)
+    white_pawn = g.pieces.find_by(x_coordinates: 1, y_coordinates: 1)
+    black_pawn = g.pieces.find_by(x_coordinates: 1, y_coordinates: 6)
+    assert_not_nil g.pieces.find_by(x_coordinates: 1, y_coordinates: 6)
+    assert_equal "active", black_pawn.status
+    white_pawn.move_to!(1, 6)
+    assert_nil g.pieces.find_by(x_coordinates: 1, y_coordinates: 6)
+    # assert_equal "captured", black_pawn.status
+  end
 end
