@@ -97,6 +97,7 @@ class Game < ActiveRecord::Base
     if path == 'horizontal' || path == 'vertical'
       return false
     end
+    # move diagonally
     if @slope.abs == 1.0 && x1 < x2
       (x1 + 1).upto(x2 - 1) do |x|
         delta_y = x - x1
@@ -106,7 +107,7 @@ class Game < ActiveRecord::Base
     end
     if @slope.abs == 1.0 && x1 > x2
       (x1 - 1).downto(x2 + 1) do |x|
-        delta_y = x1 - x
+        delta_y = x1 - x 
         y = y2 > y1 ? y1 + delta_y : y1 - delta_y
         return true if occupied?(x, y)
       end
