@@ -45,10 +45,11 @@ class Game < ActiveRecord::Base
 
   # determines whether the square with coordinates (x, y) is occupied
   def occupied?(x, y)
-    pieces.each do |piece|
-      return true if piece.x_coordinates == x && piece.y_coordinates == y
-    end
-    false
+    self.pieces.where(:x_coordinates => x, :y_coordinates => y).present? 
+    # pieces.each do |piece|
+    #   return true if piece.x_coordinates == x && piece.y_coordinates == y
+    # end
+    # false
   end
 
   def check_path(x1, y1, x2, y2)
@@ -62,10 +63,10 @@ class Game < ActiveRecord::Base
   end
 
   # determines whether the path between piece1 and destination is obstructed by another piece
-  def obstructed?(piece1_loc, destination)
+  def obstructed?(destination)
     # converts the location arrays into easier-to-read x and y terms
-    x1 = piece1_loc[0]
-    y1 = piece1_loc[1]
+    x1 = self.x_coordinates
+    y1 = self.y_coordinates
     x2 = destination[0]
     y2 = destination[1]
     # Determines whether the line between piece1 and the destination is horizontal or
