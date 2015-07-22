@@ -2,11 +2,11 @@ class Piece < ActiveRecord::Base
 
   belongs_to :game
 
-  validate :valid_move? # call after update_attributes. 
+  # validate :valid_move? # call after update_attributes. 
   # create a validation custom method that get trigger when updates_attributes 
  
   def occupied?(x, y)
-      self.pieces.where(:x_coordinates => x, :y_coordinates => y).present? 
+      self.game.pieces.where(:x_coordinates => x, :y_coordinates => y).present? 
       # pieces.each do |piece|
       #   return true if piece.x_coordinates == x && piece.y_coordinates == y
       # end
