@@ -62,4 +62,42 @@ class PieceTest < ActiveSupport::TestCase
 
   end
 
+  test "valid pawn move" do
+    g = Game.create(white_user_id: 1, black_user_id: 2)
+    # White Pawns
+    pawn = g.pieces.find_by(type: 'Pawn', color: 'white', x_coordinates: 0, y_coordinates: 1)
+
+    # Valid moves from starting position
+    assert_equal true, pawn.valid_move?(0,2)  # Move 1 place forward from starting position
+    assert_equal true, pawn.valid_move?(0,3)  # Move 2 palces forward from starting position
+
+    pawn = g.pieces.find_by(type: 'Pawn', color: 'white', x_coordinates: 4, y_coordinates: 1)
+    assert_equal true, pawn.valid_move?(4,2)  # Move 1 place forward from starting position
+    assert_equal true, pawn.valid_move?(4,3)  # Move 2 palces forward from starting position
+
+    # Valid move from position that is not a starting position
+    pawn = g.pieces.create(type: 'Pawn', color: 'white', x_coordinates: 0, y_coordinates: 5)
+    assert_equal true, pawn.valid_move?(0,6)  # Move 1 place forward post starting position
+    assert_equal false, pawn.valid_move?(0,7) # Move 2 palces forward post starting position
+    assert_equal false, pawn.valid_move?(0,4) # Move 1 place backwards post starting position
+
+    # Black Pawns
+    pawn = g.pieces.find_by(type: 'Pawn', color: 'black', x_coordinates: 0, y_coordinates: 6)
+
+    # Valid moves from starting position
+    assert_equal true, pawn.valid_move?(0,5)  # Move 1 place forward from starting position
+    assert_equal true, pawn.valid_move?(0,4)  # Move 2 palces forward from starting position
+
+    pawn = g.pieces.find_by(type: 'Pawn', color: 'black', x_coordinates: 4, y_coordinates: 6)
+    assert_equal true, pawn.valid_move?(4,5)  # Move 1 place forward from starting position
+    assert_equal true, pawn.valid_move?(4,4)  # Move 2 palces forward from starting position
+
+    # Valid move from position that is not a starting position
+    pawn = g.pieces.create(type: 'Pawn', color: 'black', x_coordinates: 0, y_coordinates: 5)
+    assert_equal true, pawn.valid_move?(0,4)  # Move 1 place forward post starting position
+    assert_equal false, pawn.valid_move?(0,3) # Move 2 palces forward post starting position
+    assert_equal false, pawn.valid_move?(0,6) # Move 1 place backwards post starting position
+
+  end
+
 end
