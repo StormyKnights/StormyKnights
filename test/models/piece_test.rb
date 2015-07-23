@@ -77,10 +77,10 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal true, pawn.valid_move?(4,3)  # Move 2 palces forward from starting position
 
     # Valid move from position that is not a starting position
-    pawn = g.pieces.create(type: 'Pawn', color: 'white', x_coordinates: 0, y_coordinates: 5)
-    assert_equal true, pawn.valid_move?(0,6)  # Move 1 place forward post starting position
-    assert_equal false, pawn.valid_move?(0,7) # Move 2 palces forward post starting position
-    assert_equal false, pawn.valid_move?(0,4) # Move 1 place backwards post starting position
+    pawn = g.pieces.create(type: 'Pawn', color: 'white', x_coordinates: 2, y_coordinates: 5)
+    assert_equal true, pawn.valid_move?(2,6)  # Move 1 place forward post starting position
+    assert_equal false, pawn.valid_move?(2,7) # Move 2 palces forward post starting position
+    assert_equal false, pawn.valid_move?(2,4) # Move 1 place backwards post starting position
 
     # Black Pawns
     pawn = g.pieces.find_by(type: 'Pawn', color: 'black', x_coordinates: 0, y_coordinates: 6)
@@ -98,6 +98,12 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal true, pawn.valid_move?(0,4)  # Move 1 place forward post starting position
     assert_equal false, pawn.valid_move?(0,3) # Move 2 palces forward post starting position
     assert_equal false, pawn.valid_move?(0,6) # Move 1 place backwards post starting position
+
+    # Test obstruction
+    pawn1 = g.pieces.create(type: 'Pawn', color: 'black', x_coordinates: 7, y_coordinates: 5)
+    pawn2 = g.pieces.create(type: 'Pawn', color: 'black', x_coordinates: 7, y_coordinates: 6)
+    assert_equal false, pawn1.valid_move?(7,6)  # Determines if obstruction for pawns works
+
 
   end
 
