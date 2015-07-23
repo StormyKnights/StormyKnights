@@ -43,6 +43,7 @@ class Game < ActiveRecord::Base
     King.create(x_coordinates: 4, y_coordinates: 7, game_id: self.id, color: 'black', image: 'blk-king.png') # Black
   end
 
+<<<<<<< HEAD
   # determines whether the square with coordinates (x, y) is occupied
   def occupied?(x, y)
     self.pieces.where(:x_coordinates => x, :y_coordinates => y).present?
@@ -120,4 +121,6 @@ class Game < ActiveRecord::Base
   end
 
 
+=======
+>>>>>>> 0781716a64ca7674db767b186741e56edd4d334b
 end
