@@ -1,65 +1,26 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
 
-<<<<<<< HEAD
-  # determines whether the path between instance piece and destination is obstructed by another piece
-  def obstructed?(destination)
-    @game = self.game
-    # converts the location arrays into easier-to-read x and y terms
-    x1 = self.x_coordinates
-    y1 = self.y_coordinates
-    x2 = destination[0]
-    y2 = destination[1]
-    # Determines whether the line between instance piece and the destination is horizontal or
-    # vertical. If neither, then it calculates the slope of line between piece1 and destination.
-    path = @game.check_path(x1, y1, x2, y2)
-    # Iterates through every square between piece1 and destination
-    # and checks whether it is occupied
-    if path == 'horizontal' && x1 < x2
-      (x1 + 1).upto(x2 - 1) do |x|
-        return true if @game.occupied?(x, y1)
-      end
-    end
-    if path == 'horizontal' && x1 > x2
-      (x1 - 1).downto(x2 + 1) do |x|
-        return true if @game.occupied?(x, y1)
-      end
-    end
-    if path == 'vertical' && y1 < y2
-      (y1 + 1).upto(y2 - 1) do |y|
-        return true if @game.occupied?(x1, y)
-      end
-    end
-    if path == 'vertical' && y1 > y2
-      (y1 - 1).downto(y2 + 1) do |y|
-        return true if @game.occupied?(x1, y)
-=======
-  # validate :valid_move? # call after update_attributes. 
-  # create a validation custom method that get trigger when updates_attributes 
- 
+  # validate :valid_move? # call after update_attributes.
+  # create a validation custom method that get trigger when updates_attributes
+
   def occupied?(x, y)
-      self.game.pieces.where(:x_coordinates => x, :y_coordinates => y).present? 
-      # pieces.each do |piece|
-      #   return true if piece.x_coordinates == x && piece.y_coordinates == y
-      # end
-      # false
+      self.game.pieces.where(:x_coordinates => x, :y_coordinates => y).present?
     end
 
-    def check_path(x1, y1, x2, y2)
-      if y1 == y2
-        return 'horizontal'
-      elsif x1 == x2
-        return 'vertical'
-      else
-        # move diagonal
-        @slope = (y2 - y1).to_f/(x2 - x1).to_f
-      end
+  def check_path(x1, y1, x2, y2)
+    if y1 == y2
+      return 'horizontal'
+    elsif x1 == x2
+      return 'vertical'
+    else
+      # move diagonal
+      @slope = (y2 - y1).to_f/(x2 - x1).to_f
     end
-
-
+  end
 
   # determines whether the path between piece1 and destination is obstructed by another piece
-  def obstructed?(destination) 
+  def obstructed?(destination)
     @game = game
     # converts the location arrays into easier-to-read x and y terms
     x1 = self.x_coordinates #assume starting points
@@ -84,7 +45,7 @@ class Piece < ActiveRecord::Base
         return true if occupied?(x, y1)
       end
     end
-    # move vertical down 
+    # move vertical down
     if path == 'vertical' && y1 < y2
       (y1 + 1).upto(y2 - 1) do |y|
         return true if occupied?(x1, y)
@@ -94,29 +55,11 @@ class Piece < ActiveRecord::Base
     if path == 'vertical' && y1 > y2
       (y1 - 1).downto(y2 + 1) do |y|
         return true if occupied?(x1, y)
->>>>>>> 0781716a64ca7674db767b186741e56edd4d334b
       end
     end
     if path == 'horizontal' || path == 'vertical'
       return false
     end
-<<<<<<< HEAD
-    if @game.slope.abs == 1.0 && x1 < x2
-      (x1 + 1).upto(x2 - 1) do |x|
-        delta_y = x - x1
-        y = y2 > y1 ? y1 + delta_y : y1 - delta_y
-        return true if @game.occupied?(x, y)
-      end
-    end
-    if @game.slope.abs == 1.0 && x1 > x2
-      (x1 - 1).downto(x2 + 1) do |x|
-        delta_y = x1 - x
-        y = y2 > y1 ? y1 + delta_y : y1 - delta_y
-        return true if @game.occupied?(x, y)
-      end
-    end
-    if @game.slope.abs != 1.0
-=======
     # move diagonally down
     if @slope.abs == 1.0 && x1 < x2
       (x1 + 1).upto(x2 - 1) do |x|
@@ -128,26 +71,21 @@ class Piece < ActiveRecord::Base
     # move diagonally up
     if @slope.abs == 1.0 && x1 > x2
       (x1 - 1).downto(x2 + 1) do |x|
-        delta_y = x1 - x 
+        delta_y = x1 - x
         y = y2 > y1 ? y1 + delta_y : y1 - delta_y
         return true if occupied?(x, y)
       end
     end
     # not a straight diagonal line
     if @slope.abs != 1.0
->>>>>>> 0781716a64ca7674db767b186741e56edd4d334b
       fail 'path is not a straight line'
     else return false
     end
   end
 
-<<<<<<< HEAD
   def move_to!(new_x, new_y)
-=======
-   def move_to!(new_x, new_y)
->>>>>>> 0781716a64ca7674db767b186741e56edd4d334b
     @game = self.game
-    if @game.occupied?(new_x, new_y)
+    if occupied?(new_x, new_y)
       # piece_at_destination = @game.pieces.where(x_coordinates: new_x, y_coordinates: new_y) This does not work.
       # Returns an object of ActiveRecord::AssociationRelation, not a model instance.
       @piece_at_destination = @game.pieces.find_by(x_coordinates: new_x, y_coordinates: new_y)

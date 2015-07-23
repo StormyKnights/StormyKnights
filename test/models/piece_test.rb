@@ -131,7 +131,46 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal false, rook2.valid_move?(5,2) #move diagonally from right position
   end
 
+  test "obstructed?" do
 
+    g = Game.create(white_user_id: 1, black_user_id: 2)
+    piece1 = g.pieces.find_by(x_coordinates: 0, y_coordinates: 0)
+    piece2 = g.pieces.find_by(x_coordinates: 2, y_coordinates: 0)
+    piece3 = g.pieces.find_by(x_coordinates: 6, y_coordinates: 7)
+    piece4 = g.pieces.find_by(x_coordinates: 6, y_coordinates: 6)
+    piece5 = g.pieces.create( x_coordinates: 2, y_coordinates: 4, type: "Pawn", color: "white")
+
+    assert_equal true, piece1.obstructed?([3, 0])
+    assert_equal true, piece2.obstructed?([2, 4])
+    assert_equal true, piece2.obstructed?([0, 0])
+    assert_equal true, piece3.obstructed?([3, 4])
+    assert_equal true, piece4.obstructed?([3, 6])
+    assert_equal false, piece4.obstructed?([6, 4])
+    assert_equal false, piece5.obstructed?([6, 4])
+    assert_equal false, piece5.obstructed?([0, 4])
+    assert_raise RuntimeError do
+      piece1.obstructed?([1, 2])
+    end
+ end
+
+ test "capturing a piece of same color" do
+
+   g = Game.create(white_user_id: 1, black_user_id: 2)
+   white_pawn = g.pieces.find_by(x_coordinates: 1, y_coordinates: 1)
+   assert_raise RuntimeError do
+     white_pawn.move_to!(2, 1)   #moving to square occupied by piece of same color
+   end
+ end
+
+ test "capturing a piece of different color by setting its coordinates to nil" do
+ # Move to square occupied by piece of different color
+ # Set coordinates of occupying piece to nil
+   g = Game.create(white_user_id: 1, black_user_id: 2)
+   white_pawn = g.pieces.find_by(x_coordinates: 1, y_coordinates: 1)
+   assert_not_nil g.pieces.find_by(x_coordinates: 1, y_coordinates: 6)
+   white_pawn.move_to!(1, 6)
+   assert_nil g.pieces.find_by(x_coordinates: 1, y_coordinates: 6)
+ end
 
 
   # test "valid bishop move" do
