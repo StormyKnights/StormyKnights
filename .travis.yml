@@ -2,7 +2,5 @@ language: ruby
 
 rvm:
   - 2.1.0
-  - rbx-X
+  - rbx-2.2.9
   - ruby-head
-  
-  
