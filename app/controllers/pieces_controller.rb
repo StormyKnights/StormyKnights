@@ -1,16 +1,21 @@
 class PiecesController < ApplicationController
 
-
   def update
-		@piece = Piece.find(params[:id]) 
+		@piece = Piece.find(params[:id])
 		@game = @piece.game
 
+    x_coordinates = params[:x_coordinates].to_i
+    y_coordinates = params[:y_coordinates].to_i
+
+    if @piece.valid_move?(x_coordinates, y_coordinates)
+      @piece.move_to!(x_coordinates, y_coordinates)
+      if @piece.update_attributes(x_coordinates: params[:x_coordinates], y_coordinates: params[:y_coordinates]) #move the pieces by passing in x,y coordinates
+    	   flash[:notice] = "Move made"  # no errors move successful
+      end
+    else
+      flash[:alert] = 'Move is invalid'
+    end
     
-    if @piece.update_attributes(x_coordinates: params[:x_coordinates], y_coordinates: params[:y_coordinates]) #move the pieces by passing in x,y coordinates
-  	   flash[:notice] = "Move made"  # no errors move successful
-     else
-        flash[:alert] = 'Move is invalid'
-     end
 
     respond_to do |format|
       format.html do 
@@ -20,7 +25,7 @@ class PiecesController < ApplicationController
         render json: params
       end
     end
-    
+
   end
 
   def show

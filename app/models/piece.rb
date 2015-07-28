@@ -1,10 +1,9 @@
 class Piece < ActiveRecord::Base
-
   belongs_to :game
 
-  # validate :valid_move? # call after update_attributes. 
-  # create a validation custom method that get trigger when updates_attributes 
- 
+  # validate :valid_move? # call after update_attributes.
+  # create a validation custom method that get trigger when updates_attributes
+
   def occupied?(x, y)
     self.game.pieces.where(x_coordinates: x, y_coordinates: y).present? 
     # pieces.each do |piece|
@@ -12,6 +11,7 @@ class Piece < ActiveRecord::Base
     # end
     # false
   end
+
 
   def check_path(x1, y1, x2, y2)
     if y1 == y2
@@ -25,9 +25,8 @@ class Piece < ActiveRecord::Base
   end
 
 
-
   # determines whether the path between piece1 and destination is obstructed by another piece
-  def obstructed?(destination) 
+  def obstructed?(destination)
     @game = game
     # converts the location arrays into easier-to-read x and y terms
     x1 = self.x_coordinates #assume starting points
@@ -52,7 +51,7 @@ class Piece < ActiveRecord::Base
         return true if occupied?(x, y1)
       end
     end
-    # move vertical down 
+    # move vertical down
     if path == 'vertical' && y1 < y2
       (y1 + 1).upto(y2 - 1) do |y|
         return true if occupied?(x1, y)
@@ -78,7 +77,7 @@ class Piece < ActiveRecord::Base
     # move diagonally up
     if @slope.abs == 1.0 && x1 > x2
       (x1 - 1).downto(x2 + 1) do |x|
-        delta_y = x1 - x 
+        delta_y = x1 - x
         y = y2 > y1 ? y1 + delta_y : y1 - delta_y
         return true if occupied?(x, y)
       end
@@ -90,16 +89,16 @@ class Piece < ActiveRecord::Base
     end
   end
 
-   def move_to!(new_x, new_y)
+  def move_to!(new_x, new_y)
     @game = self.game
-    if @game.occupied?(new_x, new_y)
+    if occupied?(new_x, new_y)
       # piece_at_destination = @game.pieces.where(x_coordinates: new_x, y_coordinates: new_y) This does not work.
       # Returns an object of ActiveRecord::AssociationRelation, not a model instance.
       @piece_at_destination = @game.pieces.find_by(x_coordinates: new_x, y_coordinates: new_y)
       if self.color == @piece_at_destination.color
         fail 'destination occupied by piece of same color'
       else
-        @piece_at_destination.update_attributes(x_coordinates: nil, y_coordinates: nil)
+        @piece_at_destination.update_attributes(x_coordinates: nil, y_coordinates: nil, status: 'captured')
       end
     end
   end

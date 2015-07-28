@@ -37,28 +37,4 @@ class GameTest < ActiveSupport::TestCase
      assert_equal 7, g.pieces.last.y_coordinates
 
    end
-
-  #  test "obstructed?" do
-
-  #    g = Game.create(white_user_id: 1, black_user_id: 2)
-  #    piece1 = g.pieces.find_by(x_coordinates: 0, y_coordinates: 0)
-  #    piece2 = g.pieces.find_by(x_coordinates: 2, y_coordinates: 0)
-  #    piece3 = g.pieces.find_by(x_coordinates: 6, y_coordinates: 7)
-  #    piece4 = g.pieces.find_by(x_coordinates: 6, y_coordinates: 6)
-  #    piece5 = g.pieces.create( x_coordinates: 2, y_coordinates: 4, type: "Pawn", color: "white")
-
-  #    assert_equal true, g.occupied?(4, 7)
-  #    assert_equal true, piece1.obstructed?([3, 0])
-  #    assert_equal true, piece2.obstructed?([2, 4])
-  #    assert_equal true, piece2.obstructed?([0, 0])
-  #    assert_equal true, piece3.obstructed?([3, 4])
-  #    assert_equal true, piece4.obstructed?([3, 6])
-  #    assert_equal false, piece4.obstructed?([6, 4])
-  #    assert_equal false, piece5.obstructed?([6, 4])
-  #    assert_equal false, piece5.obstructed?([0, 4])
-  #    assert_raise RuntimeError do
-  #      piece1.obstructed?([1, 2])
-  #    end
-  # end
-
 end
