@@ -26,7 +26,6 @@ class PiecesController < ApplicationController
   def show
 	  @piece = Piece.find(params[:id])
     @pieces = @piece.game.pieces #display all the pieces on the board 
- 
   end
 
   private
