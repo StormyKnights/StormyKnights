@@ -26,14 +26,25 @@ nav {
   text-align: center;
 }
 
+.navbar-inverse .navbar-brand {
+  font-size: 22px;
+  line-height: 30px;
+  height: 50px;
+  color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: #E4E4E4;
+}
+
 body {
-  padding-top: 3%;
+  padding-top: 60px;
   font-size: 1.5em;
   background-color: #f2f2f2;
 }
 
 body.homepage {
-  padding-top: 3%;
+  padding-top: 60%;
   font-size: 1.5em;
   background: url('bg-main.jpg')  no-repeat center center fixed; 
   -webkit-background-size: cover;
@@ -64,10 +75,11 @@ h2 {
   width: 200px;
   font-size: 2rem;
 }
-  .btn:hover {
-    color: white;
-    background-color: #494949;
-  }
+
+.btn:hover {
+  color: white;
+  background-color: #494949;
+}
 
 .container { 
   text-align: center;
@@ -88,16 +100,7 @@ input#user_remember_me { //set margin for remember me checkbox
     margin-top: 20px;
 }
 
-.navbar-inverse .navbar-brand {
-  font-size: 22px;
-  line-height: 30px;
-  height: 50px;
-  color: white;
-}
 
-.navbar-inverse .navbar-nav > li > a {
-  color: #E4E4E4;
-}
 
 
 
