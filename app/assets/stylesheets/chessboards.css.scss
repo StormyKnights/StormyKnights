@@ -3,10 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .game-container {
-  max-width: 68em;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 50px;
+ margin-top: 10%;
 }
 
 #chess_board { 
@@ -42,20 +39,17 @@ td div {
 
 }
 .selected_piece {
-  border: 2px solid blue;
-  background-color: yellow;
+  border: 2px solid lightblue;
 }
 
 
 .booyah-box {
-  -moz-box-shadow: 1px 1px 2px 0 #d0d0d0;
-  -webkit-box-shadow: 1px 1px 2px 0 #d0d0d0;
-  box-shadow: 1px 1px 2px 0 #d0d0d0;
   background: #fff;
   border: 1px solid #ccc;
-  border-color: #e4e4e4 #bebebd #bebebd #e4e4e4;
-  padding: 10px;
+  border-color: #e4e4e4 ;
+  padding: 30px;
   text-align: center;
+  color: #464646;
 }
 
 

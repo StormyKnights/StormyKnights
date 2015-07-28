@@ -6,23 +6,23 @@ class Piece < ActiveRecord::Base
   # create a validation custom method that get trigger when updates_attributes 
  
   def occupied?(x, y)
-      self.game.pieces.where(:x_coordinates => x, :y_coordinates => y).present? 
-      # pieces.each do |piece|
-      #   return true if piece.x_coordinates == x && piece.y_coordinates == y
-      # end
-      # false
-    end
+    self.game.pieces.where(x_coordinates: x, y_coordinates: y).present? 
+    # pieces.each do |piece|
+    #   return true if piece.x_coordinates == x && piece.y_coordinates == y
+    # end
+    # false
+  end
 
-    def check_path(x1, y1, x2, y2)
-      if y1 == y2
-        return 'horizontal'
-      elsif x1 == x2
-        return 'vertical'
-      else
-        # move diagonal
-        @slope = (y2 - y1).to_f/(x2 - x1).to_f
-      end
+  def check_path(x1, y1, x2, y2)
+    if y1 == y2
+      return 'horizontal'
+    elsif x1 == x2
+      return 'vertical'
+    else
+      # move diagonal
+      @slope = (y2 - y1).to_f/(x2 - x1).to_f
     end
+  end
 
 
 
