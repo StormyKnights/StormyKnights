@@ -12,8 +12,15 @@ class PiecesController < ApplicationController
         flash[:alert] = 'Move is invalid'
      end
 
-
-    redirect_to game_path(@game)  #redirect to game show page
+    respond_to do |format|
+      format.html do 
+        redirect_to game_path(@game)  #redirect to game show page
+      end
+      format.json do
+        render json: params
+      end
+    end
+    
   end
 
   def show
