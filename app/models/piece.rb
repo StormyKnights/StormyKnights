@@ -97,16 +97,23 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  # Is the game in check
-  def in_check?(color)
-    king = Piece.find_by(type: 'King', color: color)
-    opponent_piece = []
-
-    # put logic here for determining if the game is in check
-    # if opponent_piece.valid_move?(king.x_coordinates, y.coordinates)
-    # game is in check
-    # else game is not in check
-    # end
-  end
+  # # Is the game in check
+  # def in_check?(color)
+  #   @game = self.game
+  #   king = Piece.find_by(type: 'King', color: color)
+  #   opponent_pieces = []
+  #
+  #   @game.pieces.where("not color = ?", color).each do |piece|
+  #     if piece.valid_move?(king.x_coordinates, king.y_coordinates)
+  #       opponent_pieces << piece
+  #     end
+  #   end
+  #
+  #   if opponent_pieces.length > 0
+  #     opponent_pieces
+  #   else
+  #     false
+  #   end
+  # end
 
 end
