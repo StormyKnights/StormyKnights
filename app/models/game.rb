@@ -43,5 +43,25 @@ class Game < ActiveRecord::Base
     King.create(x_coordinates: 4, y_coordinates: 7, game_id: self.id, color: 'black', image: 'blk-king.png', status: 'active') # Black
   end
 
+  # # Is the game in check
+  def in_check?(color)
+    check = []
+    opponent_pieces = pieces.where("not color = ?", color)
+    king = Piece.find_by(type: 'King', color: color)
+
+    opponent_pieces.each do |opponent_piece|
+      if opponent_piece.valid_move?(king.x_coordinates, king.y_coordinates)
+        check << opponent_piece
+      end # End opponent_piece valid_move! check
+    end # End opponent_pieces block for determining if game is in_check
+
+    # If check variable has more than 0 items the game is in check otherwise is not in check
+    if check.count > 0
+      true
+    else
+      false
+    end
+
+  end # End in_check? method
 
 end

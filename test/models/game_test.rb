@@ -37,4 +37,28 @@ class GameTest < ActiveSupport::TestCase
      assert_equal 7, g.pieces.last.y_coordinates
 
    end
+
+   test "game in check" do
+     g = Game.create(white_user_id: 1, black_user_id: 2)
+
+     p = g.pieces.find_by(x_coordinates: 3, color: "white", type: "Pawn") # White Pawn
+     k = g.pieces.find_by(x_coordinates: 4, type: "King", color: "black") # Black King
+
+     p.update(x_coordinates: 3, y_coordinates: 4) # Update Pawn piece to x_coordinates: 3 & y_coordinates: 4
+     k.update(x_coordinates: 4, y_coordinates: 5) # Update King piece to x_coordinates: 4 & y_coordinates: 5
+
+     assert_equal true, g.in_check?("black")
+   end
+
+   test "game NOT in check" do
+     g = Game.create(white_user_id: 1, black_user_id: 2)
+
+     p = g.pieces.find_by(x_coordinates: 4, color: "white", type: "Pawn") # White Pawn
+     k = g.pieces.find_by(x_coordinates: 4, type: "King", color: "black") # Black King
+
+     p.update(x_coordinates: 4, y_coordinates: 4) # Update Pawn piece to x_coordinates: 4 & y_coordinates: 4
+     k.update(x_coordinates: 4, y_coordinates: 5) # Update King piece to x_coordinates: 4 & y_coordinates: 5
+
+     assert_equal false, g.in_check?("black")
+   end
 end
