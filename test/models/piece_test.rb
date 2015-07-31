@@ -172,22 +172,64 @@ class PieceTest < ActiveSupport::TestCase
    assert_nil g.pieces.find_by(x_coordinates: 1, y_coordinates: 6)
  end
 
- test "sucessful castling" do
+ test "white kingside castling" do
    g = Game.create(white_user_id: 1, black_user_id: 2)
    p1 = g.pieces.find_by(x_coordinates: 5, y_coordinates: 0)
    p2 = g.pieces.find_by(x_coordinates: 6, y_coordinates: 0)
-   p3 = g.pieces.find_by(x_coordinates: 1, y_coordinates: 0)
-   p4 = g.pieces.find_by(x_coordinates: 2, y_coordinates: 0)
-   p5 = g.pieces.find_by(x_coordinates: 3, y_coordinates: 0)
-   [p1, p2, p3, p4, p5].each do |p|
+   [p1, p2].each do |p|
      p.destroy
    end
    king = g.pieces.find_by(x_coordinates: 4, type: "King", color: "white")
    king.castling(7, 0)
    castled_piece1 = g.pieces.find_by(x_coordinates: 6, y_coordinates: 0)
    castled_piece2 = g.pieces.find_by(x_coordinates: 5, y_coordinates: 0)
-  #  assert_not_nil g.pieces.find_by(x_coordinates: 6, y_coordinates: 0)
-  #  assert_not_nil g.pieces.find_by(x_coordinates: 5, y_coordinates: 0)
+   assert_equal "King", castled_piece1.type
+   assert_equal "Rook", castled_piece2.type
+ end
+
+ test "white queenside castling" do
+   g = Game.create(white_user_id: 1, black_user_id: 2)
+   p3 = g.pieces.find_by(x_coordinates: 1, y_coordinates: 0)
+   p4 = g.pieces.find_by(x_coordinates: 2, y_coordinates: 0)
+   p5 = g.pieces.find_by(x_coordinates: 3, y_coordinates: 0)
+   [p3, p4, p5].each do |p|
+     p.destroy
+   end
+   king = g.pieces.find_by(x_coordinates: 4, type: "King", color: "white")
+   king.castling(0, 0)
+   castled_piece1 = g.pieces.find_by(x_coordinates: 2, y_coordinates: 0)
+   castled_piece2 = g.pieces.find_by(x_coordinates: 3, y_coordinates: 0)
+   assert_equal "King", castled_piece1.type
+   assert_equal "Rook", castled_piece2.type
+ end
+
+ test "black kingside castling" do
+   g = Game.create(white_user_id: 1, black_user_id: 2)
+   p1 = g.pieces.find_by(x_coordinates: 5, y_coordinates: 7)
+   p2 = g.pieces.find_by(x_coordinates: 6, y_coordinates: 7)
+   [p1, p2].each do |p|
+     p.destroy
+   end
+   king = g.pieces.find_by(x_coordinates: 4, type: "King", color: "black")
+   king.castling(7, 7)
+   castled_piece1 = g.pieces.find_by(x_coordinates: 6, y_coordinates: 7)
+   castled_piece2 = g.pieces.find_by(x_coordinates: 5, y_coordinates: 7)
+   assert_equal "King", castled_piece1.type
+   assert_equal "Rook", castled_piece2.type
+ end
+
+ test "black queenside castling" do
+   g = Game.create(white_user_id: 1, black_user_id: 2)
+   p3 = g.pieces.find_by(x_coordinates: 1, y_coordinates: 7)
+   p4 = g.pieces.find_by(x_coordinates: 2, y_coordinates: 7)
+   p5 = g.pieces.find_by(x_coordinates: 3, y_coordinates: 7)
+   [p3, p4, p5].each do |p|
+     p.destroy
+   end
+   king = g.pieces.find_by(x_coordinates: 4, type: "King", color: "black")
+   king.castling(0, 7)
+   castled_piece1 = g.pieces.find_by(x_coordinates: 2, y_coordinates: 7)
+   castled_piece2 = g.pieces.find_by(x_coordinates: 3, y_coordinates: 7)
    assert_equal "King", castled_piece1.type
    assert_equal "Rook", castled_piece2.type
  end

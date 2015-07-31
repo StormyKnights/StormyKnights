@@ -9,14 +9,14 @@ class King < Piece
 
 	def castling(x_destination, y_destination)
 		@game = self.game
-		if x_destination = 7
+		if x_destination == 7
 			self.update_attributes(x_coordinates: 6)
-			kingside_rook = @game.pieces.find_by(x_coordinates: 7, type: "Rook")
+			kingside_rook = @game.pieces.find_by(x_coordinates: 7, type: "Rook", color: self.color)
 			kingside_rook.update_attributes(x_coordinates: 5)
-		elsif x_destination = 0
-			self.update_attributes(x_coordinates: 6)
-			queenside_rook = @game.pieces.find_by(x_coordinates: 7, type: "Rook")
-			queenside_rook.update_attributes(x_coordinates: 5)
+		elsif x_destination == 0
+			self.update_attributes(x_coordinates: 2)
+			queenside_rook = @game.pieces.find_by(x_coordinates: 0, type: "Rook", color: self.color)
+			queenside_rook.update_attributes(x_coordinates: 3)
 		end
 	end
 
