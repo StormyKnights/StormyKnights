@@ -7,7 +7,9 @@ class PiecesController < ApplicationController
     x_coordinates = params[:x_coordinates].to_i
     y_coordinates = params[:y_coordinates].to_i
 
-    if @piece.valid_move?(x_coordinates, y_coordinates)
+    if @piece.valid_move?(x_coordinates, y_coordinates) == "castling"
+      @piece.castling(x_coordinates, y_coordinates)
+    elsif @piece.valid_move?(x_coordinates, y_coordinates)
       @piece.move_to!(x_coordinates, y_coordinates)
       if @piece.update_attributes(x_coordinates: params[:x_coordinates], y_coordinates: params[:y_coordinates]) #move the pieces by passing in x,y coordinates
     	   flash[:notice] = "Move made"  # no errors move successful
@@ -15,10 +17,10 @@ class PiecesController < ApplicationController
     else
       flash[:alert] = 'Move is invalid'
     end
-    
+
 
     respond_to do |format|
-      format.html do 
+      format.html do
         redirect_to game_path(@game)  #redirect to game show page
       end
       format.json do
@@ -30,7 +32,7 @@ class PiecesController < ApplicationController
 
   def show
 	  @piece = Piece.find(params[:id])
-    @pieces = @piece.game.pieces #display all the pieces on the board 
+    @pieces = @piece.game.pieces #display all the pieces on the board
   end
 
   private
