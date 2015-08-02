@@ -4,7 +4,8 @@ class Rook < Piece
 		if (x_coordinates == x_destination || y_coordinates == y_destination) &&
   		!obstructed?([x_destination, y_destination])
 				@has_moved = true
-				return true
+				true
+		else false
 		end
 	end
 

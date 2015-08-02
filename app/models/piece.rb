@@ -4,14 +4,10 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
 
+  # checks whether a iece is present at (x, y)
   def occupied?(x, y)
     self.game.pieces.where(x_coordinates: x, y_coordinates: y).present?
-    # pieces.each do |piece|
-    #   return true if piece.x_coordinates == x && piece.y_coordinates == y
-    # end
-    # false
   end
-
 
   def check_path(x1, y1, x2, y2)
     if y1 == y2
@@ -25,7 +21,7 @@ class Piece < ActiveRecord::Base
   end
 
 
-  # determines whether the path between piece1 and destination is obstructed by another piece
+  # determines whether the path between instance piece and destination is obstructed by another piece
   def obstructed?(destination)
     @game = game
     # converts the location arrays into easier-to-read x and y terms
@@ -88,11 +84,10 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  # implements capturing a piece
   def move_to!(new_x, new_y)
     @game = self.game
     if occupied?(new_x, new_y)
-      # piece_at_destination = @game.pieces.where(x_coordinates: new_x, y_coordinates: new_y) This does not work.
-      # Returns an object of ActiveRecord::AssociationRelation, not a model instance.
       @piece_at_destination = @game.pieces.find_by(x_coordinates: new_x, y_coordinates: new_y)
       if self.color == @piece_at_destination.color
         fail 'destination occupied by piece of same color'
