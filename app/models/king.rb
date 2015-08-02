@@ -1,10 +1,12 @@
 class King < Piece
 
 	def can_castle?(x_destination, y_destination)
+		# Castling allowed if:
 		# king and rook not moved
 		# no pieces between king and rook
 		# king not in check either at start or at destination
-		@has_moved != true && !obstructed?([x_destination, y_destination]) && !@game.in_check?(self.color)
+		@game = self.game
+		@has_moved != true && !obstructed?([x_destination, y_destination]) && @game.in_check?(color) == false
 	end
 
 	def castling(x_destination, y_destination)
@@ -23,7 +25,7 @@ class King < Piece
 	def valid_move?(x_destination, y_destination)
 		x_distance = (x_coordinates - x_destination).abs <=1
 		y_distance = (y_coordinates - y_destination).abs <=1
-		if self.type == 'King' && self.can_castle?(x_destination, y_destination) && x_destination == 7 || x_destination == 1
+		if can_castle?(x_destination, y_destination) && x_destination == 7 || x_destination == 0
 			return 'castling'
 		elsif x_distance && y_distance
 			@has_moved = true
@@ -31,6 +33,12 @@ class King < Piece
 		else
 			return false
 		end
+	end
+
+	def king_valid_move_for_in_check?(x_destination, y_destination)
+		x_distance = (x_coordinates - x_destination).abs <=1
+		y_distance = (y_coordinates - y_destination).abs <=1
+		x_distance && y_distance
 	end
 
 end

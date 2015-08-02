@@ -1,11 +1,11 @@
+# This class contains actions affecting individual pieces.
+# Class Piece describes actions relevant to all pieces on the board.
+# It is inherited by classes describing different types of pieces.
 class Piece < ActiveRecord::Base
   belongs_to :game
 
-  # validate :valid_move? # call after update_attributes.
-  # create a validation custom method that get trigger when updates_attributes
-
   def occupied?(x, y)
-    self.game.pieces.where(x_coordinates: x, y_coordinates: y).present? 
+    self.game.pieces.where(x_coordinates: x, y_coordinates: y).present?
     # pieces.each do |piece|
     #   return true if piece.x_coordinates == x && piece.y_coordinates == y
     # end
@@ -38,7 +38,6 @@ class Piece < ActiveRecord::Base
     path = check_path(x1, y1, x2, y2)
     # Iterates through every square between piece1 and destination
     # and checks whether it is occupied
-
     # move horizontal right to left
     if path == 'horizontal' && x1 < x2
       (x1 + 1).upto(x2 - 1) do |x|
