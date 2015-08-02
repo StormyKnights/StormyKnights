@@ -99,6 +99,7 @@ class Piece < ActiveRecord::Base
         fail 'destination occupied by piece of same color'
       else
         @piece_at_destination.update_attributes(x_coordinates: nil, y_coordinates: nil, status: 'captured')
+        @status = @piece_at_destination.status
       end
     end
   end
