@@ -3,7 +3,6 @@ class PiecesController < ApplicationController
   def update
 		@piece = Piece.find(params[:id])
 		@game = @piece.game
-
     x_coordinates = params[:x_coordinates].to_i
     y_coordinates = params[:y_coordinates].to_i
     valid_move_result = @piece.valid_move?(x_coordinates, y_coordinates)

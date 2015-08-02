@@ -4,7 +4,14 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
 
-  # checks whether a iece is present at (x, y)
+  # This method checks whether a piece is present at (x, y).
+  #
+  # * *Args*    :
+  #   - +x, y+ -> x and y coordinates of the instance piece
+  # * *Returns* :
+  #   - True if square at (x, y) is occupied
+  #   - False otherwise
+  #
   def occupied?(x, y)
     self.game.pieces.where(x_coordinates: x, y_coordinates: y).present?
   end
@@ -21,7 +28,16 @@ class Piece < ActiveRecord::Base
   end
 
 
-  # determines whether the path between instance piece and destination is obstructed by another piece
+# This method determines whether the path between instance piece and destination is obstructed by another piece.
+#
+# * *Args*    :
+#   - +destination+ -> array containing x and y coordinates of the piece's intended destination
+# * *Returns* :
+#   - True if one or more squares between the piece and the destination are occupied
+#   - False otherwise
+# * *Raises* :
+#   - +RuntimeError+ -> if the path is not a straight line
+#
   def obstructed?(destination)
     @game = game
     # converts the location arrays into easier-to-read x and y terms
@@ -32,8 +48,6 @@ class Piece < ActiveRecord::Base
     # Determines whether the line between piece1 and the destination is horizontal or
     # vertical. If neither, then it calculates the slope of line between piece1 and destination.
     path = check_path(x1, y1, x2, y2)
-    # Iterates through every square between piece1 and destination
-    # and checks whether it is occupied
     # move horizontal right to left
     if path == 'horizontal' && x1 < x2
       (x1 + 1).upto(x2 - 1) do |x|
@@ -84,7 +98,17 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  # implements capturing a piece
+  # This method implements capturing a piece.
+  #
+  # * *Args*    :
+  #   - +new_x, new_y+ -> x and y coordinates of the piece's intended destination
+  # * *Returns* :
+  #   - If intended destination is occupied by piece of the opposite color,
+  #     then the occupying piece is removed from the board by setting its coordinates to 'nil'
+  #
+  # * *Raises* :
+  #   - +RuntimeError+ -> if intended destination is occupied by piece of same color
+  #
   def move_to!(new_x, new_y)
     @game = self.game
     if occupied?(new_x, new_y)

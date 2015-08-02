@@ -9,6 +9,11 @@ class Game < ActiveRecord::Base
 
   after_create :populate_board!
 
+  # This method populates the board with pieces after a new game is created.
+  #
+  # * *Args*    : none
+  # * *Returns* : chess pieces assigned to starting locations on the board
+  #
   def populate_board!
 
     # Populate Pawns
@@ -44,7 +49,14 @@ class Game < ActiveRecord::Base
     King.create(x_coordinates: 4, y_coordinates: 7, game_id: self.id, color: 'black', image: 'blk-king.png', status: 'active') # Black
   end
 
-  # # Is the game in check
+  # This method determines whether player of a given color is in a state of check.
+  #
+  # * *Args*    :
+  #   - +current_color+ -> string indicating the color of the player in question
+  # * *Returns* :
+  #   - True if current_color player is in check
+  #   - False otherwise
+  #
   def in_check?(current_color)
     check = []
     king = pieces.find_by(type: 'King', color: current_color)
