@@ -44,8 +44,13 @@ validate on front end faster-->
                   }
                 }).success(function(data){
                   // console.log(data.valid);
-                  if (data.valid === false) {
-                    window.location.reload();
+                    if (data.valid === false) {
+                      window.location.reload();
+                    }
+                    console.log(data.captured);
+                    if (data.captured === true) {
+                      window.location.reload();
+                    }
                   }
 
                 }); //post

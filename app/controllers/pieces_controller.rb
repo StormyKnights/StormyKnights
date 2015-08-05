@@ -13,6 +13,7 @@ class PiecesController < ApplicationController
       if @piece.update_attributes(x_coordinates: params[:x_coordinates], y_coordinates: params[:y_coordinates]) #move the pieces by passing in x,y coordinates
     	   # flash[:notice] = "Move made"  # no errors move successful
          @valid = true
+         @captured = @piece.captured?
       end
     else
       # flash[:alert] = 'Move is invalid'
@@ -24,7 +25,7 @@ class PiecesController < ApplicationController
         redirect_to game_path(@game)  #redirect to game show page
       end
       format.json do
-        json_result = {:valid => @valid, :status => @status}
+        json_result = {:valid => @valid, :captured => @captured, :status => @status}
         render json: json_result
       end
     end
