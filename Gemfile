@@ -37,6 +37,8 @@ gem 'simple_form'
 
 gem 'jquery-ui-rails'
 
+gem "firebase"
+
 gem 'pry-rails', :group => :development
 
 group :doc do

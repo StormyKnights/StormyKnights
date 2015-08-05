@@ -22,12 +22,26 @@
 validate on front end faster-->
 
 <script>
+
+  var dataStore;
+
   $(function() {
+
+      dataStore = new Firebase('https://stormy-knights.firebaseio.com/');
+
      $( ".draggable" ).draggable();
      $( "td" ).droppable({
        drop: function( event, ui ) {
          //make piece snappable to the destination
          $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
+
+         dataStore.child('messages').push({
+            'message': 'test'
+          });
+
+         dataStore.child('messages').on('child_added', function(dataSnapshot) {
+              window.location.reload(true);
+          });
         
          $.ajax( {  type: 'PUT',
                     url: $(ui.draggable).attr("href"),
@@ -39,7 +53,7 @@ validate on front end faster-->
                 }).success(function(data){
                   // console.log(data.valid);
                   if (data.valid === false) {
-                    window.location.reload();
+                    window.location.reload(true);
                   }
 
                 }); //post

@@ -100,8 +100,10 @@ class Piece < ActiveRecord::Base
       else
         @piece_at_destination.update_attributes(x_coordinates: nil, y_coordinates: nil, status: 'captured')
         @status = @piece_at_destination.status
+       
       end
     end
   end
+
 
 end
