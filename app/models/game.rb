@@ -1,3 +1,4 @@
+# This class contains actions that affect the overall state of the game.
 class Game < ActiveRecord::Base
 
   has_many :users
@@ -8,6 +9,11 @@ class Game < ActiveRecord::Base
 
   after_create :populate_board!
 
+  # This method populates the board with pieces after a new game is created.
+  #
+  # * *Args*    : none
+  # * *Returns* : chess pieces assigned to starting locations on the board
+  #
   def populate_board!
 
     # Populate Pawns
@@ -43,15 +49,32 @@ class Game < ActiveRecord::Base
     King.create(x_coordinates: 4, y_coordinates: 7, game_id: self.id, color: 'black', image: 'blk-king.png', status: 'active') # Black
   end
 
-  # # Is the game in check
-  def in_check?(color)
+  # This method determines whether player of a given color is in a state of check.
+  #
+  # * *Args*    :
+  #   - +current_color+ -> string indicating the color of the player in question
+  # * *Returns* :
+  #   - True if current_color player is in check
+  #   - False otherwise
+  #
+  def in_check?(current_color)
     check = []
-    opponent_pieces = pieces.where("not color = ?", color)
-    king = Piece.find_by(type: 'King', color: color)
+    king = pieces.find_by(type: 'King', color: current_color)
+    opponent_pieces = pieces.where.not(color: current_color)
 
     opponent_pieces.each do |opponent_piece|
-      if opponent_piece.valid_move?(king.x_coordinates, king.y_coordinates)
-        check << opponent_piece
+      if  opponent_piece.type != "King"
+        if opponent_piece.valid_move?(king.x_coordinates, king.y_coordinates)
+          check << opponent_piece
+        end
+      # A new valid_move method for king (king_valid_move_for_in_check?) is used in this iteration
+      # in order to prevent executing can_castle?, which would lead
+      # to executing obstructed?, which would throw a runtime error
+      # when checking the path between two opposite kings
+      elsif opponent_piece.type == "King"
+         if opponent_piece.king_valid_move_for_in_check?(king.x_coordinates, king.y_coordinates)
+           check << opponent_piece
+         end
       end # End opponent_piece valid_move! check
     end # End opponent_pieces block for determining if game is in_check
 

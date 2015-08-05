@@ -20,21 +20,27 @@
 </div>
 <!-- accept function return true or false
 validate on front end faster-->
+<br />
+<br />
+<div class="booyah-box col-xs-8 col-xs-offset-2">
+	<%=link_to 'Start New Game', games_path, :class => "btn", :method => 'POST' %>
+</div>
 
 <script>
   $(function() {
      $( ".draggable" ).draggable();
+     activeClass: "ui-state-highlight",
      $( "td" ).droppable({
        drop: function( event, ui ) {
          //make piece snappable to the destination
          $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
-        
+
          $.ajax( {  type: 'PUT',
                     url: $(ui.draggable).attr("href"),
                     dataType: 'json',
                     data: {
-                      x_coordinates: this.cellIndex, 
-                      y_coordinates: (7-(this.parentNode.rowIndex)) 
+                      x_coordinates: this.cellIndex,
+                      y_coordinates: (7-(this.parentNode.rowIndex))
                   }
                 }).success(function(data){
                   // console.log(data.valid);
@@ -43,12 +49,8 @@ validate on front end faster-->
                   }
 
                 }); //post
+
        } //drop
      }); //droppable
    }); //function
  </script>
-
-
-
-
-
