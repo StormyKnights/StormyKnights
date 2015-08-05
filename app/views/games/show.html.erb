@@ -8,7 +8,7 @@
             <td>
               <% @pieces.each do |piece| %>
                 <% if piece.x_coordinates == col && piece.y_coordinates == row %>
-                  <%= link_to image_tag(piece.image, class: 'img-responsive'), piece_path(piece), class: 'draggable' %>
+                  <%= link_to image_tag(piece.image, class: 'img-responsive'), piece_path(piece), class: 'draggable', remote: true %>
                 <% end %>
               <% end %><!-- end pieces.each -->
             </td>
@@ -42,6 +42,12 @@ validate on front end faster-->
                       x_coordinates: this.cellIndex,
                       y_coordinates: (7-(this.parentNode.rowIndex))
                   }
+                }).success(function(data){
+                  // console.log(data.valid);
+                  if (data.valid === false) {
+                    window.location.reload();
+                  }
+
                 }); //post
 
        } //drop
