@@ -22,11 +22,15 @@ class King < Piece
 		end
 	end
 
+	def is_castling_to?(x_destination, y_destination)
+		can_castle?(x_destination, y_destination) && x_destination == 7 || x_destination == 0
+	end
+
 	def valid_move?(x_destination, y_destination)
 		x_distance = (x_coordinates - x_destination).abs <=1
 		y_distance = (y_coordinates - y_destination).abs <=1
-		if can_castle?(x_destination, y_destination) && x_destination == 7 || x_destination == 0
-			return 'castling'
+		if is_castling_to?(x_destination, y_destination)
+			return true
 		elsif x_distance && y_distance
 			@has_moved = true
 			return true

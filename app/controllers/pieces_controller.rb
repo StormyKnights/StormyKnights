@@ -5,20 +5,7 @@ class PiecesController < ApplicationController
 		@game = @piece.game
     x_coordinates = params[:x_coordinates].to_i
     y_coordinates = params[:y_coordinates].to_i
-    valid_move_result = @piece.valid_move?(x_coordinates, y_coordinates)
-    if valid_move_result == 'castling'
-      @piece.castling(x_coordinates, y_coordinates)
-    elsif valid_move_result == true
-      @piece.move_to!(x_coordinates, y_coordinates)
-      if @piece.update_attributes(x_coordinates: params[:x_coordinates], y_coordinates: params[:y_coordinates]) #move the pieces by passing in x,y coordinates
-    	   # flash[:notice] = "Move made"  # no errors move successful
-         @valid = true
-         @captured = @piece.captured?
-      end
-    else
-      # flash[:alert] = 'Move is invalid'
-      @valid = false
-    end
+    
 
     respond_to do |format|
       format.html do
