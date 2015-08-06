@@ -43,16 +43,16 @@ validate on front end faster-->
                       y_coordinates: (7-(this.parentNode.rowIndex))
                   }
                 }).success(function(data){
-                  // console.log(data.valid);
+                   console.log("valid_move?")
+                   console.log(data.valid);
                     if (data.valid === false) {
                       window.location.reload();
-                    }
-                    // console.log(data.captured);
+                    },
+                    console.log("captured?")
+                    console.log(data.captured);
                     if (data.captured === true) {
                       window.location.reload();
                     }
-                  }
-
                 }); //post
 
        } //drop

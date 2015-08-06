@@ -5,8 +5,8 @@ class PiecesController < ApplicationController
 		@game = @piece.game
     x_coordinates = params[:x_coordinates].to_i
     y_coordinates = params[:y_coordinates].to_i
+    @piece.perform_move!(x_destination, y_destination)
     
-
     respond_to do |format|
       format.html do
         redirect_to game_path(@game)  #redirect to game show page

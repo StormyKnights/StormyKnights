@@ -129,18 +129,16 @@ class Piece < ActiveRecord::Base
   end
 
   def perform_move!(x_destination, y_destination)
-    valid_move_result = @piece.valid_move?(x_coordinates, y_coordinates)
+    valid_move_result = self.valid_move?(x_coordinates, y_coordinates)
     if self.is_castling_to?(x_destination, y_destination)
       self.castling(x_coordinates, y_coordinates)
     elsif valid_move_result
-      @piece.move_to!(x_coordinates, y_coordinates)
-      if @piece.update_attributes(x_coordinates: params[:x_coordinates], y_coordinates: params[:y_coordinates]) #move the pieces by passing in x,y coordinates
-    	   # flash[:notice] = "Move made"  # no errors move successful
+      self.move_to!(x_coordinates, y_coordinates)
+      if self.update_attributes(x_coordinates: params[:x_coordinates], y_coordinates: params[:y_coordinates]) #move the pieces by passing in x,y coordinates
          @valid = true
-         @captured = @piece.captured?
+         @captured = self.captured?
       end
     else
-      # flash[:alert] = 'Move is invalid'
       @valid = false
     end
     return @valid
