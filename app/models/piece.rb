@@ -3,6 +3,7 @@
 # It is inherited by classes describing different types of pieces.
 class Piece < ActiveRecord::Base
   belongs_to :game
+  attr_reader :valid, :captured, :castle
 
   # This method checks whether a piece is present at (x, y).
   #
@@ -13,7 +14,7 @@ class Piece < ActiveRecord::Base
   #   - False otherwise
   #
   def occupied?(x, y)
-    self.game.pieces.where(x_coordinates: x, y_coordinates: y).present?
+    game.pieces.where(x_coordinates: x, y_coordinates: y).present?
   end
 
   def check_path(x1, y1, x2, y2)
@@ -23,7 +24,7 @@ class Piece < ActiveRecord::Base
       return 'vertical'
     else
       # move diagonal
-      @slope = (y2 - y1).to_f/(x2 - x1).to_f
+      @slope = (y2 - y1).to_f / (x2 - x1).to_f
     end
   end
 
@@ -37,7 +38,7 @@ class Piece < ActiveRecord::Base
 #   - False otherwise
 # * *Raises* :
 #   - +RuntimeError+ -> if the path is not a straight line
-#
+
   def obstructed?(destination)
     @game = game
     # converts the location arrays into easier-to-read x and y terms
@@ -110,16 +111,43 @@ class Piece < ActiveRecord::Base
   #   - +RuntimeError+ -> if intended destination is occupied by piece of same color
   #
   def move_to!(new_x, new_y)
-    @game = self.game
+    @game = game
     if occupied?(new_x, new_y)
       @piece_at_destination = @game.pieces.find_by(x_coordinates: new_x, y_coordinates: new_y)
-      if self.color == @piece_at_destination.color
+      if color == @piece_at_destination.color
         fail 'destination occupied by piece of same color'
       else
         @piece_at_destination.update_attributes(x_coordinates: nil, y_coordinates: nil, status: 'captured')
         @status = @piece_at_destination.status
+        @captured = true
       end
+    else @captured = false
     end
+  end
+
+  def castling_to?(x_coordinates, y_coordinates)
+    false
+  end
+
+  def perform_move!(x_coordinates, y_coordinates)
+    valid_move_result = self.valid_move?(x_coordinates, y_coordinates)
+    if self.castling_to?(x_coordinates, y_coordinates)
+      @castle = true
+      castling(x_coordinates)
+    elsif valid_move_result
+      self.move_to!(x_coordinates, y_coordinates)
+      if update_attributes(x_coordinates: x_coordinates, y_coordinates: y_coordinates) # move the pieces by passing in x,y coordinates
+         @valid = true
+      end
+    else
+      @valid = false
+    end
+  end
+
+  private
+
+  def piece_params
+  	params.require(:piece).permit(:x_coordinates, :y_coordinates)
   end
 
 end

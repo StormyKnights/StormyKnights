@@ -63,7 +63,7 @@ class Game < ActiveRecord::Base
     opponent_pieces = pieces.where.not(color: current_color)
 
     opponent_pieces.each do |opponent_piece|
-      if  opponent_piece.type != "King"
+      if  opponent_piece.type != "King" && opponent_piece.status == 'active'
         if opponent_piece.valid_move?(king.x_coordinates, king.y_coordinates)
           check << opponent_piece
         end
