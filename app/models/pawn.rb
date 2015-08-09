@@ -14,7 +14,7 @@ class Pawn < Piece
         x_distance = (x_destination - x_coordinates)
         y_distance = (y_destination - y_coordinates)
 
-        (x_distance == 0 && y_distance == 1) || (x_distance == 0 && y_distance == 2)  && !obstructed?([x_destination, y_destination])
+        (x_distance == 0 && y_distance == 1) || (x_distance == 0 && y_distance == 2) && !obstructed?([x_destination, y_destination])
       else                                              # If Pawn at any other position other than start it can move 1 place forward
         x_distance = (x_destination - x_coordinates)
         y_distance = (y_destination - y_coordinates)
