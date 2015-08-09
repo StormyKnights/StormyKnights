@@ -2,7 +2,7 @@
 
 StormyKnights Chess
 
-This is a chess app built in Ruby on Rails for The Firehose Project.
+This is a chess app built in Ruby on Rails for The Firehose Project. It is still a work in progress.
 
 Team StormyKnights is composed of the following members:
 
@@ -11,6 +11,6 @@ Team StormyKnights is composed of the following members:
 * {Colin Rubbert}[https://github.com/colinrubbert]
 * {Yury Voloshin}[https://github.com/yvoloshin]
 
-* The team is led by {Ken Mazaika}[https://github.com/kenmazaika]
+* The team is led by {Ken Mazaika}[https://www.linkedin.com/in/kenmazaika]
 
 Try StormyKnights Chess live at stormy-knights.herokuapp.com
