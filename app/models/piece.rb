@@ -3,7 +3,7 @@
 # It is inherited by classes describing different types of pieces.
 class Piece < ActiveRecord::Base
   belongs_to :game
-  attr_reader :valid, :captured, :castle
+  attr_reader :valid, :captured, :castle, :not_color
 
   # This method checks whether a piece is present at (x, y).
   #
@@ -141,6 +141,10 @@ class Piece < ActiveRecord::Base
       end
     else
       @valid = false
+    end
+    if color == 'white'
+      @not_color = 'black'
+      else @not_color = 'white'
     end
   end
 
