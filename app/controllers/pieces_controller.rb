@@ -12,7 +12,7 @@ class PiecesController < ApplicationController
         redirect_to game_path(@game)  # redirect to game show page
       end
       format.json do
-        json_result = { valid: @piece.valid, captured: @piece.captured, castle: @piece.castle, status: @piece.status }
+        json_result = { valid: @piece.valid, captured: @piece.captured, castle: @piece.castle, status: @piece.status, not_color: @piece.not_color }
         render json: json_result
       end
     end
