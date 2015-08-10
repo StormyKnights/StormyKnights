@@ -3,7 +3,9 @@
     <h1>WELCOME TO STORMY KNIGHTS</h1>
     <h2>Let the Storm Begin!</h2>
     <br />
-    <%= link_to 'START GAME', new_game_path, :class => 'btn' %>
-    <%= link_to 'JOIN GAME', '#', :class => 'btn' %>
+
+     <%=link_to 'NEW GAME', games_path, :class => "btn", :method => 'POST' %>
+     <%= link_to 'JOIN GAME', games_path, :class => 'btn' %>
+
   </div>
 </div>
