@@ -6,9 +6,10 @@
     <h4>Open games</h4>
   <% end %>
   <br>
-  <ul class='game-list'>
-    <% @open_games.each do |game| %>
-      <li class='game-list-item'>
+
+      <% @open_games.each do |game| %>
+      <div class="col-xs-12 col-sm-6">
+        <div class="game text-center">
         <p>
        	  <% white_player = User.find_by(id: game.white_user_id) %>
           <%= white_player.email %>
@@ -17,7 +18,8 @@
             <%= f.submit 'Join Game' %>
           <% end %>
         </p>
-      </li>
+      </div>
+    </div>
     <% end %>
-  </ul>
+
 </section>

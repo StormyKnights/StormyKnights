@@ -1,12 +1,14 @@
-<% if @black_player.present? %>
-  <%= @black_player.email %>
-<% else %>
-  <%= 'Waiting for Black Player to join...' %>
-<% end %>
 
 <div class="col-xs-10 col-xs-offset-1">
 
   <div class="game-container">
+    <% if @black_player.present? %>
+      <%= @black_player.email %>
+    <% else %>
+      <%= 'Waiting for Black Player to join...' %>
+    <% end %>
+    <br />
+    <br />
     <table id="chess_board" cellpadding="0" cellspacing="0">
       <% 7.downto(0) do |row| %>
         <tr>
@@ -22,19 +24,22 @@
         </tr>
       <% end %><!--end row-->
     </table>
+    <br />
+    <% if @white_player.present? %>
+      <%= @white_player.email %>
+    <% else %>
+      <%= 'Waiting for White Player to join...' %>
+    <% end %>
+    <br />
+    <br />
   </div>
 </div>
-<!-- accept function return true or false
-validate on front end faster-->
+
 <br />
 <br />
 <div class='clear'></div>
 
-<% if @white_player.present? %>
-  <%= @white_player.email %>
-<% else %>
-  <%= 'Waiting for White Player to join...' %>
-<% end %>
+
 
 
 <script>

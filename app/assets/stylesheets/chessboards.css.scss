@@ -4,9 +4,10 @@
 
 .game-container {
  margin-top: 10%;
+ text-align:center;
 }
 
-#chess_board { 
+#chess_board {
   border-collapse: collapse;
   margin: 0 auto .5em auto;
   padding-top: 40px;
@@ -51,7 +52,3 @@ td div {
   text-align: center;
   color: #464646;
 }
-
-
-
-
