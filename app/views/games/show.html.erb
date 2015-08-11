@@ -60,10 +60,11 @@
                       alert("Invalid move. Try again.");
                       window.location.reload();
                     }
-                    if (data.valid === true) {
+                    if (data.valid === true && data.captured === false) {
                       alert("It is now "+ data.not_color + " player's turn.");
                     }
                     if (data.captured === true) {
+                      alert(data.not_color + " piece captured");
                       window.location.reload();
                     }
                     if (data.castle === true) {
