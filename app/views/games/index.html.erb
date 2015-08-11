@@ -1,26 +1,23 @@
 <br>
-<h2>List of available games<h2>
-
+<h2>List of Available Games</h2>
+<br>
 <section class='open-games'>
-         <% if @open_games.present? %>
-            <h4>Open games</h4>
+  <% if @open_games.present? %>
+    <h4>Open games</h4>
+  <% end %>
+  <br>
+  <ul class='game-list'>
+    <% @open_games.each do |game| %>
+      <li class='game-list-item'>
+        <p>
+       	  <% white_player = User.find_by(id: game.white_user_id) %>
+          <%= white_player.email %>
+          <%= simple_form_for game, :method => :put do |f| %>
+            <%= f.input :black_user_id, :as => :hidden, :input_html => { :value => current_user.id } %>
+            <%= f.submit 'Join Game' %>
           <% end %>
-          <ul class='game-list'>
-            <% @open_games.each do |game| %>
-              <li class='game-list-item'>
-                <h5>
-                 
-                </h5>
-                <p>
-               		<%= game.white_user_id %>
-               		
-                  <%= simple_form_for game, :method => :put do |f| %>
-                    <%= f.input :black_user_id, :as => :hidden, :input_html => { :value => current_user.id } %>
-                    <%= f.submit 'Join Game' %>
-                  <% end %>
-                </p>
-              </li>
-            <% end %>
-          </ul>
-        </section>
-    
+        </p>
+      </li>
+    <% end %>
+  </ul>
+</section>

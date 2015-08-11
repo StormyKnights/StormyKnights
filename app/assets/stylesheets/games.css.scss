@@ -5,3 +5,27 @@
 .clear {
 	clear:both
 }
+
+.game-list {
+    text-align: left;
+    margin-top: 1em;
+  }
+
+  .game-list-item {
+    padding: 2em 2em 1em 2em;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-bottom: .5em;
+    background-color: #ddd;
+    text-align: center;
+    h5 {
+      margin-bottom: 1em;
+    }
+    a:not(.button) {
+      color: #444;
+    }
+    button {
+      padding: .25em .5em;
+      margin: 0;
+    }
+  }

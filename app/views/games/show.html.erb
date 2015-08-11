@@ -1,4 +1,8 @@
-<%= @game.black_user_id %>
+<% if @black_player.present? %>
+  <%= @black_player.email %>
+<% else %>
+  <%= 'Waiting for Black Player to join...' %>
+<% end %>
 
 <div class="col-xs-10 col-xs-offset-1">
 
@@ -25,7 +29,13 @@ validate on front end faster-->
 <br />
 <br />
 <div class='clear'></div>
-<%= @game.white_user_id %>
+
+<% if @white_player.present? %>
+  <%= @white_player.email %>
+<% else %>
+  <%= 'Waiting for White Player to join...' %>
+<% end %>
+
 
 <script>
   $(function() {
@@ -48,18 +58,15 @@ validate on front end faster-->
                       alert("Invalid move. Try again.");
                       window.location.reload();
                     }
+                    if (data.valid === true) {
+                      alert("It is now "+ data.not_color + " black player's turn.");
+                      window.location.reload();
+                    }
                     if (data.captured === true) {
                       window.location.reload();
                     }
                     if (data.castle === true) {
                       window.location.reload();
-                    }
-                    console.log(data.not_color)
-                    if (data.not_color === 'black') {
-                      alert("It is now black player's turn.");
-                    }
-                    if (data.not_color === 'white') {
-                      alert("It is now white player's turn.");
                     }
                 }); //post
 
