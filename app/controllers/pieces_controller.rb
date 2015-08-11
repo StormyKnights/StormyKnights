@@ -3,16 +3,25 @@ class PiecesController < ApplicationController
   def update
     @piece = Piece.find(params[:id])
     @game = @piece.game
+    @color = @piece.color
+
     x_coordinates = params[:x_coordinates].to_i
     y_coordinates = params[:y_coordinates].to_i
-    @piece.perform_move!(x_coordinates, y_coordinates)
+
+    Piece.transaction do
+      @piece.perform_move!(x_coordinates, y_coordinates)
+      if @game.in_check?(@color)
+        raise ActiveRecord::Rollback
+      end
+    end
+
 
     respond_to do |format|
       format.html do
         redirect_to game_path(@game)  # redirect to game show page
       end
       format.json do
-        json_result = { valid: @piece.valid, captured: @piece.captured, castle: @piece.castle, status: @piece.status }
+        json_result = { valid: @piece.valid, captured: @piece.captured, castle: @piece.castle, status: @piece.status, moved_into_check: @piece.moved_into_check }
         render json: json_result
       end
     end

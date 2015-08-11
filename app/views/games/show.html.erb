@@ -53,6 +53,10 @@ validate on front end faster-->
                     if (data.castle === true) {
                       window.location.reload();
                     }
+                    if (data.moved_into_check === true) {
+                      alert("Invalid Move. You just moved yourself into check. Try again.")
+                      window.location.reload();
+                    }
                 }); //post
 
        } //drop
