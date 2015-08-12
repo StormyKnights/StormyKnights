@@ -1,0 +1,25 @@
+<br>
+<h2>List of Available Games</h2>
+<br>
+<section class='open-games'>
+  <% if @open_games.present? %>
+    <h4>Open games</h4>
+  <% end %>
+  <br>
+
+      <% @open_games.each do |game| %>
+      <div class="col-xs-12 col-sm-6">
+        <div class="game text-center">
+        <p>
+       	  <% white_player = User.find_by(id: game.white_user_id) %>
+          <%= white_player.email %>
+          <%= simple_form_for game, :method => :put do |f| %>
+            <%= f.input :black_user_id, :as => :hidden, :input_html => { :value => current_user.id } %>
+            <%= f.submit 'Join Game' %>
+          <% end %>
+        </p>
+      </div>
+    </div>
+    <% end %>
+
+</section>

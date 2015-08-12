@@ -6,7 +6,8 @@ StormyKnights::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'chessboards#index'
 
-  resources :games, :only => [:new, :create, :show, :update]
+  resources :games, :only => [:new, :create, :show, :update, :index]
+  
 
   resources :pieces, :only => [:update, :show, :create]
 
