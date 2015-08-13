@@ -4,7 +4,7 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
   after_rollback :invalid_move_into_check
-  attr_reader :valid, :captured, :castle, :moved_into_check
+  attr_reader :valid, :captured, :castle, :moved_into_check, :not_color
 
   # This method checks whether a piece is present at (x, y).
   #
@@ -131,18 +131,23 @@ class Piece < ActiveRecord::Base
   end
 
   def perform_move!(x_coordinates, y_coordinates)
-      valid_move_result = self.valid_move?(x_coordinates, y_coordinates)
-      if self.castling_to?(x_coordinates, y_coordinates)
-        @castle = true
-        castling(x_coordinates)
-      elsif valid_move_result
-        self.move_to!(x_coordinates, y_coordinates)
-        if update_attributes(x_coordinates: x_coordinates, y_coordinates: y_coordinates) # move the pieces by passing in x,y coordinates
-           @valid = true
-        end
-      else
-        @valid = false
+    valid_move_result = self.valid_move?(x_coordinates, y_coordinates)
+    if self.castling_to?(x_coordinates, y_coordinates)
+      @castle = true
+      castling(x_coordinates)
+    elsif valid_move_result
+      self.move_to!(x_coordinates, y_coordinates)
+      if update_attributes(x_coordinates: x_coordinates, y_coordinates: y_coordinates) # move the pieces by passing in x,y coordinates
+         @valid = true
       end
+    else
+      @valid = false
+    end
+
+    if color == 'white'
+      @not_color = 'black'
+      else @not_color = 'white'
+    end
   end
 
   def invalid_move_into_check
