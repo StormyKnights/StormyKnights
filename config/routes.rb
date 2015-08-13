@@ -9,8 +9,11 @@ StormyKnights::Application.routes.draw do
   resources :games, :only => [:new, :create, :show, :update]
 
   resources :pieces, :only => [:update, :show, :create]
+  post 'pieces/promote', to: 'pieces#promote'
 
   resources :users, :only => [:show]
+
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

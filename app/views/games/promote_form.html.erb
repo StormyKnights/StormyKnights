@@ -1,0 +1,9 @@
+<p>Which piece would you like to promote to?</p>
+<%= form_tag("/pieces/promote") do %>
+  <%= hidden_field_tag :piece_id, @piece.id %>
+  <% @captured_pieces.each do |piece| %>
+    <%= radio_button_tag(:choice, piece.id) %>
+    <%= label_tag(:choice, piece.type) %>
+  <% end %>
+  <%= submit_tag('Submit') %>
+<% end %>

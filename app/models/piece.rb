@@ -3,7 +3,7 @@
 # It is inherited by classes describing different types of pieces.
 class Piece < ActiveRecord::Base
   belongs_to :game
-  attr_reader :valid, :captured, :castle
+  attr_reader :valid, :captured, :castle, :promote
 
   # This method checks whether a piece is present at (x, y).
   #
@@ -26,6 +26,14 @@ class Piece < ActiveRecord::Base
       # move diagonal
       @slope = (y2 - y1).to_f / (x2 - x1).to_f
     end
+  end
+
+#pawn promotion
+  def pawn_promotion?
+    # type - pawn
+    # y_coordinates 7 or 0
+    # valid move
+    self.type == 'Pawn' && (y_coordinates == 7 || y_coordinates== 0)
   end
 
 
@@ -138,6 +146,9 @@ class Piece < ActiveRecord::Base
       self.move_to!(x_coordinates, y_coordinates)
       if update_attributes(x_coordinates: x_coordinates, y_coordinates: y_coordinates) # move the pieces by passing in x,y coordinates
          @valid = true
+      end
+      if pawn_promotion?
+         @promote = true
       end
     else
       @valid = false
